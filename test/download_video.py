@@ -17,15 +17,15 @@ if response.task_status == "SUCCESS":
     video_result = requests.get(video_url.url, stream=True)
     cover_image = requests.get(video_url.cover_image_url, stream=True)
     
+    # 确保目录存在
+    os.makedirs("results", exist_ok=True)
+    
     # 保存图片
     cover_image_path = os.path.join("results", "cover_image.jpg")
     with open(cover_image_path, "wb") as file:
         for chunk in cover_image.iter_content(chunk_size=1024):
             if chunk:
                 file.write(chunk)
-
-    # 确保目录存在
-    os.makedirs("results", exist_ok=True)
 
     # 保存视频文件
     video_path = os.path.join("results", "downloaded_video.mp4")
